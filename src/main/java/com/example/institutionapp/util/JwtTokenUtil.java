@@ -23,15 +23,13 @@ public class JwtTokenUtil {
     private Long expiration;
 
     public String generateToken(String username) {
-        String token = Jwts
+        return Jwts
                 .builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + this.expiration))
                 .signWith(this.secretKey, SignatureAlgorithm.HS384)
                 .compact();
-
-        return token;
     }
 
     public boolean validateToken(String token, String username) {
