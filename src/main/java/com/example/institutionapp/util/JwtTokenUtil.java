@@ -31,13 +31,11 @@ public class JwtTokenUtil {
                 .signWith(this.secretKey, SignatureAlgorithm.HS384)
                 .compact();
 
-        System.out.println("Generated token: " + token);
         return token;
     }
 
     public boolean validateToken(String token, String username) {
         String tokenUsername = this.getUsernameFromToken(token);
-        System.out.println("tokenUsername: " + tokenUsername);
 
         return tokenUsername.equals(username) && !isTokenExpired(token);
     }

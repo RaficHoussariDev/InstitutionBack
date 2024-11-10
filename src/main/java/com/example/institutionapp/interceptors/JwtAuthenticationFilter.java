@@ -29,7 +29,6 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
 
-            System.out.println("token: " + token);
             if (!token.isEmpty()) {
                 String username = this.tokenUtil.getUsernameFromToken(token);
 
