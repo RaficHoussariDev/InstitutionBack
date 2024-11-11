@@ -2,6 +2,7 @@ package com.example.institutionapp.controllers;
 
 import com.example.institutionapp.models.auth.AuthRequest;
 import com.example.institutionapp.models.auth.AuthResponse;
+import com.example.institutionapp.models.auth.CreateUserRequest;
 import com.example.institutionapp.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,5 +26,11 @@ public class AuthController {
                 new AuthResponse(token),
                 HttpStatus.OK
         );
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<Void> createUser(@RequestBody @Valid CreateUserRequest user) {
+        this.authService.createUser(user);
+        return ResponseEntity.noContent().build();
     }
 }
