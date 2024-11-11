@@ -6,20 +6,17 @@ import com.example.institutionapp.services.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/login")
-public class LoginController {
+@RequestMapping("/api/auth/")
+public class AuthController {
     private final AuthService authService;
 
-    @GetMapping
+    @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid AuthRequest authRequest) {
         String token = this.authService.login(authRequest.getUsername(), authRequest.getPassword());
 

@@ -60,7 +60,7 @@ public class SecurityConfig {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/api/login", "/error").permitAll()
+                .antMatchers("/api/auth/**", "/error").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
