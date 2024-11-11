@@ -1,6 +1,7 @@
 package com.example.institutionapp.interceptors;
 
 import com.example.institutionapp.util.JwtTokenUtil;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,7 +30,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
 
-            if (!token.isEmpty()) {
+            try {
                 String username = this.tokenUtil.getUsernameFromToken(token);
 
                 if (username != null && this.tokenUtil.validateToken(token, username)) {
@@ -38,6 +39,10 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
                     SecurityContextHolder.getContext().setAuthentication(authToken);
                 }
+            } catch (ExpiredJwtException e) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.getWriter().write("{\"message\": \"Token has expired. Please login again.\"}");
+                return;
             }
         }
 

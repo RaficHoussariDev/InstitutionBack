@@ -29,7 +29,7 @@ public class ValidationExceptionHandler {
     }
 
     @ExceptionHandler(InvalidUsernamePasswordException.class)
-    public ResponseEntity<Map<String, String>> handleInstitutionNotFoundException(InvalidUsernamePasswordException ex) {
+    public ResponseEntity<Map<String, String>> handleInvalidUsernamePasswordException(InvalidUsernamePasswordException ex) {
         Map<String, String> errors = new HashMap<>();
         errors.put("message", ex.getMessage());
 
