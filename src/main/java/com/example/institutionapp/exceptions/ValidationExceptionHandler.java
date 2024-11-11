@@ -30,6 +30,14 @@ public class ValidationExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(InvalidUsernamePasswordException.class)
+    public ResponseEntity<Map<String, String>> handleInstitutionNotFoundException(InvalidUsernamePasswordException ex) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+
+        return new ResponseEntity<>(errors, HttpStatus.UNAUTHORIZED);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, String>> handleGenericException(Exception ex) {
         Map<String, String> error = new HashMap<>();
