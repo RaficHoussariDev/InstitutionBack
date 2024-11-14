@@ -41,22 +41,17 @@ public class InstitutionService {
 
     @Transactional
     public void upsertInstitution(UpsertInstitutionRequest institutionRequest) {
-        Institution institution;
-
         if(institutionRequest.getId() == 0) {
             log.info("Creating new institution");
-
-            institution = this.mapFromUpsertRequest(institutionRequest);
         } else {
             log.info("Updating institution with id: {}", institutionRequest.getId());
 
-            institution = this.institutionRepository
-                    .findById(institutionRequest.getId())
-                    .orElseThrow(() ->
-                            new InstitutionNotFoundException("Institution with id " + institutionRequest.getId() + " not found")
-                    );
+            if(!institutionRepository.existsById(institutionRequest.getId())) {
+                throw new InstitutionNotFoundException("Institution with id " + institutionRequest.getId() + " not found");
+            }
         }
 
+        Institution institution = this.mapFromUpsertRequest(institutionRequest);
         this.institutionRepository.save(institution);
     }
 
